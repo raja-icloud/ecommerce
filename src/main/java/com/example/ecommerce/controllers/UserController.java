@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.models.User;
 import com.example.ecommerce.repository.UserRep;
+import com.example.ecommerce.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,15 @@ public class UserController {
     @Autowired
     UserRep userRep;
 
+    @Autowired
+    UserService userService; // Loosly coupling
+
+    // UserService userService = new UserService(); // tightly coupling
+
     @GetMapping("users/get-msg")
     public ResponseEntity<?> getAllUser() {
+        userService.createUsers();
+        userService.getAllUsers();
         return ResponseEntity.ok(userRep.findAll());
     }
 
